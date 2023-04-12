@@ -33,6 +33,7 @@ public class TownHallEndpoint {
                 return vote.getQuestion().getId().equals(q.getId());
             }).stream().count());
             question.setId(q.getId());
+            question.setPriority(q.getRank() != null ? q.getRank() : 0);
             question.setUserVoted(votes.filter(vote -> {
                 return vote.getQuestion().getId().equals(q.getId()) && vote.getOwner().equals("current@vaadin.com");
             }).stream().findFirst().isPresent());
@@ -48,7 +49,6 @@ public class TownHallEndpoint {
 
     public void vote(Question question, boolean up) {
         var savedQuestion = questionService.get(question.getId());
-        System.out.println(question.getId() + " " + up + " " + savedQuestion.isPresent());
         if (savedQuestion.isPresent()) {
             var q = savedQuestion.get();
 
@@ -74,7 +74,13 @@ public class TownHallEndpoint {
     }
 
     public void setPriority(Question question, int priority) {
-        // no-op
-        System.out.println("Set priority " + priority + " for " + question.getText() + "");
+        var savedQuestion = questionService.get(question.getId());
+        if (savedQuestion.isPresent()) {
+            var q = savedQuestion.get();
+            q.setRank(priority);
+            questionService.update(q);
+        } else {
+            throw new IllegalArgumentException("Question not found");
+        }
     }
 }
