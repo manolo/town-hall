@@ -32,7 +32,7 @@ export default function HelloReactView() {
 
   return (
     <div className={cn('h-full', 'flex', 'flex-col', styles.container)}>
-      <section className="flex-grow">
+      <section className="flex-grow overflow-hidden">
         <VirtualList items={sortQuestions(questions)} className={cn('p-m', 'h-full', 'box-border', styles.questions)}>
           {({ item: question }) => (
             <TownHallQuestion
