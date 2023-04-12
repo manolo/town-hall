@@ -31,6 +31,7 @@ export default function HelloReactView() {
                 setQuestions([...questions]);
                 await TownHallEndpoint.setPriority(question, priority);
               }}
+              onVote={async (state) => TownHallEndpoint.vote(question, state)}
             />
           )}
         </VirtualList>
