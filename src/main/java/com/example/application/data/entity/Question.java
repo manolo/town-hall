@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     @Nonnull
     private String question;
     @Nonnull
-    private Integer value;
+    private Integer rank;
 
     @ManyToOne
     @Nonnull
@@ -44,11 +44,11 @@ public class Question extends AbstractEntity {
     public void setQuestion(String question) {
         this.question = question;
     }
-    public Integer getValue() {
-        return value;
+    public Integer getRank() {
+        return rank;
     }
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
     public Session getSession() {
         return session;
