@@ -1,9 +1,7 @@
 import TownHallView from 'Frontend/views/townhall/TownHallView.js';
 import MainLayout from 'Frontend/views/MainLayout.js';
-import { lazy } from 'react';
 import { createBrowserRouter, IndexRouteObject, NonIndexRouteObject, useMatches } from 'react-router-dom';
 
-const AboutView = lazy(async () => import('Frontend/views/about/AboutView.js'));
 export type MenuProps = Readonly<{
   icon?: string;
   title?: string;
@@ -33,8 +31,7 @@ export const routes: readonly ViewRouteObject[] = [
     element: <MainLayout />,
     handle: { icon: 'null', title: 'Main' },
     children: [
-      { path: '/', element: <TownHallView />, handle: { icon: 'globe-solid', title: 'Town Hall' } },
-      { path: '/about', element: <AboutView />, handle: { icon: 'file', title: 'About' } },
+      { path: '/', element: <TownHallView />, handle: { icon: 'comments-solid', title: 'Town Hall' } },
     ],
   },
 ];
