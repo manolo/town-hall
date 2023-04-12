@@ -4,7 +4,12 @@
   grid-template-rows: auto;
   grid-template-areas:
     "score text"
-    "score date"
+    "score date";
+  background: var(--lumo-primary-color);
+  color: var(--lumo-primary-contrast-color);
+  padding: var(--lumo-space-m);
+  border-radius: var(--lumo-border-radius-l);
+  margin-bottom: var(--lumo-space-m);
 }
 
 .score {
