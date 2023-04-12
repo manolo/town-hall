@@ -26,6 +26,10 @@ export default function HelloReactView() {
 
       <section>
         <MessageInput
+          i18n={{
+            send: "Ask",
+            message: "Type your question",
+          }}
           onSubmit={async (ev) => {
             setQuestions([...questions, { text: ev.detail.value }]);
 
@@ -34,7 +38,7 @@ export default function HelloReactView() {
             );
             Notification.show(serverResponse);
           }}
-        ></MessageInput>
+        />
       </section>
     </>
   );
