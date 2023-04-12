@@ -1,29 +1,40 @@
-import { Button } from '@hilla/react-components/Button.js';
-import { Notification } from '@hilla/react-components/Notification.js';
-import { TextField } from '@hilla/react-components/TextField.js';
-import { HelloReactEndpoint } from 'Frontend/generated/endpoints.js';
-import { useState } from 'react';
+import { MessageInput } from "@hilla/react-components/MessageInput.js";
+import { Notification } from "@hilla/react-components/Notification.js";
+import { VirtualList } from "@hilla/react-components/VirtualList.js";
+
+import { HelloReactEndpoint } from "Frontend/generated/endpoints.js";
+import { useState } from "react";
+
+type Question = {
+  text: string;
+  userVoted?: boolean;
+};
 
 export default function HelloReactView() {
-  const [name, setName] = useState('');
+  const [questions, setQuestions] = useState<Question[]>([
+    { text: "What is your name?" },
+    { text: "How are you?" },
+  ]);
 
   return (
     <>
-      <section className="flex p-m gap-m items-end">
-        <TextField
-          label="Your name"
-          onValueChanged={(e) => {
-            setName(e.detail.value);
-          }}
-        />
-        <Button
-          onClick={async () => {
-            const serverResponse = await HelloReactEndpoint.sayHello(name);
+      <section>
+        <VirtualList items={questions} className="p-m">
+          {({ item }) => <span>{item.text}</span>}
+        </VirtualList>
+      </section>
+
+      <section>
+        <MessageInput
+          onSubmit={async (ev) => {
+            setQuestions([...questions, { text: ev.detail.value }]);
+
+            const serverResponse = await HelloReactEndpoint.sayHello(
+              ev.detail.value
+            );
             Notification.show(serverResponse);
           }}
-        >
-          Say hello
-        </Button>
+        ></MessageInput>
       </section>
     </>
   );
