@@ -3,7 +3,7 @@ import { VirtualList } from '@hilla/react-components/VirtualList.js';
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import Question from 'Frontend/generated/com/example/application/data/Question.js';
-import { TownHallEndpoint } from 'Frontend/generated/endpoints.js';
+import { TownHallEndpoint, UserEndpoint } from 'Frontend/generated/endpoints.js';
 import TownHallQuestion from 'Frontend/views/townhall/TownHallQuestion.js';
 import styles from './TownHallView.module.scss';
 
@@ -14,10 +14,21 @@ function sortQuestions(questions: Question[]) {
 
 export default function HelloReactView() {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    TownHallEndpoint.getQuestions().then(setQuestions);
-  }, []);
+    UserEndpoint.getAuthenticatedUser().then((user) => {
+      setAuthenticated(!!user);
+    });
+
+    if (authenticated) {
+      TownHallEndpoint.getQuestions().then(setQuestions);
+    }
+  }, [authenticated]);
+
+  if (!authenticated) {
+    return null;
+  }
 
   return (
     <div className={cn('h-full', 'flex', 'flex-col', styles.container)}>

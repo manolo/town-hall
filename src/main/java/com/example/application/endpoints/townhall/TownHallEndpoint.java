@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 
 import com.example.application.data.Question;
 import com.example.application.data.entity.Vote;
@@ -20,9 +23,19 @@ public class TownHallEndpoint {
     private final QuestionService questionService;
     private final VoteService voteService;
 
+
+
     public TownHallEndpoint(QuestionService questionService, VoteService voteService) {
         this.questionService = questionService;
         this.voteService = voteService;
+    }
+
+    private DefaultOidcUser getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof DefaultOidcUser) {
+            return (DefaultOidcUser) authentication.getPrincipal();
+        }
+        return null;
     }
 
     public List<Question> getQuestions() {
@@ -34,9 +47,13 @@ public class TownHallEndpoint {
             }).stream().count());
             question.setId(q.getId());
             question.setPriority(q.getRank() != null ? q.getRank() : 0);
-            question.setUserVoted(votes.filter(vote -> {
-                return vote.getQuestion().getId().equals(q.getId()) && vote.getOwner().equals("current@vaadin.com");
-            }).stream().findFirst().isPresent());
+            
+            if (getLoggedInUser() != null) {
+                question.setUserVoted(votes.filter(vote -> {
+                    return vote.getQuestion().getId().equals(q.getId()) && vote.getOwner().equals(getLoggedInUser().getEmail());
+                }).stream().findFirst().isPresent());
+            }
+            
             return question;
         }).stream().collect(Collectors.toList());
     }
@@ -44,6 +61,7 @@ public class TownHallEndpoint {
     public void submitQuestion(Question question) {
         com.example.application.data.entity.Question newQuestion = new com.example.application.data.entity.Question();
         newQuestion.setQuestion(question.getText());
+        newQuestion.setOwner(getLoggedInUser().getEmail());
         questionService.update(newQuestion);
     }
 
@@ -56,12 +74,12 @@ public class TownHallEndpoint {
                 Vote newVote = new Vote();
                 newVote.setQuestion(q);
                 newVote.setDate(LocalDate.now());
-                newVote.setOwner("current@vaadin.com");
+                newVote.setOwner(getLoggedInUser().getEmail());
                 voteService.update(newVote);
             } else {
                 var votes = voteService.list(Pageable.unpaged());
                 var vote = votes.filter(v -> {
-                    return v.getQuestion().getId().equals(q.getId()) && v.getOwner().equals("current@vaadin.com");
+                    return v.getQuestion().getId().equals(q.getId()) && v.getOwner().equals(getLoggedInUser().getEmail());
                 }).stream().findFirst();
                 if (vote.isPresent()) {
                     voteService.delete(vote.get().getId());
