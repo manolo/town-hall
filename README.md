@@ -23,23 +23,37 @@ Once the JAR file is built, you can run it using
 `java -jar target/myapp-1.0-SNAPSHOT.jar` (NOTE, replace
 `myapp-1.0-SNAPSHOT.jar` with the name of your jar).
 
+## Docker
+You need Docker installed in your computer and running
+
+1. To create a docker image with the application run
+```
+docker build -t town-hall .
+```
+2. To run the app in your local execute
+```
+docker run -it -p 8080:8080 --rm town-hall:latest
+```
+3. Then you can access your app in http://localhost:8080
+
+
 ## Project structure
 
 <table style="width:100%; text-align: left;">
   <tr><th>Directory</th><th>Description</th></tr>
   <tr><td><code>frontend/</code></td><td>Client-side source directory</td></tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>index.html</code></td><td>HTML template</td></tr>
-  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>index.ts</code></td><td>Frontend 
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>index.ts</code></td><td>Frontend
 entrypoint, bootstraps a React application</td></tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>routes.tsx</code></td><td>React Router routes definition</td></tr>
-  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>MainLayout.tsx</code></td><td>Main 
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>MainLayout.tsx</code></td><td>Main
 layout component, contains the navigation menu, uses <a href="https://hilla.dev/docs/react/components/app-layout">
 App Layout</a></td></tr>
-  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>views/</code></td><td>UI view 
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>views/</code></td><td>UI view
 components</td></tr>
-  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>themes/</code></td><td>Custom  
+  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>themes/</code></td><td>Custom
 CSS styles</td></tr>
-  <tr><td><code>src/main/java/&lt;groupId&gt;/</code></td><td>Server-side 
+  <tr><td><code>src/main/java/&lt;groupId&gt;/</code></td><td>Server-side
 source directory, contains the server-side Java views</td></tr>
   <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<code>Application.java</code></td><td>Server entry-point</td></tr>
 </table>
