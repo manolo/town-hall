@@ -11,10 +11,13 @@ import dev.hilla.Endpoint;
 @AnonymousAllowed
 public class TownHallEndpoint {
     public List<Question> getQuestions() {
-        return List.of(
-          new Question("Should we launch the lunch train?"),
-          new Question("When is the Vaadin 25 released planned?")
-        );
+        var q1 = new Question("Should we launch the lunch train?");
+        q1.setScore(5);
+        q1.setUserVoted(true);
+        var q2 = new Question("When is the Vaadin 25 released planned?");
+        q2.setScore(2);
+        q2.setPriority(1);
+        return List.of(q1, q2);
     }
 
     public void submitQuestion(Question question) {
