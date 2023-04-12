@@ -1,19 +1,23 @@
 package com.example.application.data.entity;
 
+import java.time.LocalDate;
+
 import dev.hilla.Nonnull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 public class Vote extends AbstractEntity {
 
+    @ManyToOne
+    @Nonnull
+    private Question question;
+
     @Email
     @Nonnull
     private String owner;
-    @Nonnull
-    private UUID question;
+
     private LocalDate date;
     @Nonnull
     private Integer type;
@@ -24,10 +28,10 @@ public class Vote extends AbstractEntity {
     public void setOwner(String owner) {
         this.owner = owner;
     }
-    public UUID getQuestion() {
+    public Question getQuestion() {
         return question;
     }
-    public void setQuestion(UUID question) {
+    public void setQuestion(Question question) {
         this.question = question;
     }
     public LocalDate getDate() {

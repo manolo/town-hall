@@ -1,9 +1,15 @@
 package com.example.application.data.entity;
 
 import dev.hilla.Nonnull;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderColumn;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Session extends AbstractEntity {
@@ -15,6 +21,17 @@ public class Session extends AbstractEntity {
     private String description;
     private LocalDate date;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderColumn
+    @JoinColumn
+    private Set<Question> questions;
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
     public String getOwner() {
         return owner;
     }

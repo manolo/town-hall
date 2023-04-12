@@ -1,9 +1,16 @@
 package com.example.application.data.entity;
 
+import java.util.Set;
+
 import dev.hilla.Nonnull;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderColumn;
 import jakarta.validation.constraints.Email;
-import java.util.UUID;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -15,8 +22,15 @@ public class Question extends AbstractEntity {
     private String question;
     @Nonnull
     private Integer value;
+
+    @ManyToOne
     @Nonnull
-    private UUID session;
+    private Session session;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderColumn
+    @JoinColumn
+    private Set<Vote> votes;
 
     public String getOwner() {
         return owner;
@@ -36,10 +50,10 @@ public class Question extends AbstractEntity {
     public void setValue(Integer value) {
         this.value = value;
     }
-    public UUID getSession() {
+    public Session getSession() {
         return session;
     }
-    public void setSession(UUID session) {
+    public void setSession(Session session) {
         this.session = session;
     }
 
