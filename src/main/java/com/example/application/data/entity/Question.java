@@ -7,6 +7,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
@@ -19,6 +20,7 @@ public class Question extends AbstractEntity {
     @Nonnull
     private String owner;
     @Nonnull
+    @Lob
     private String question;
     @Nonnull
     private Integer rank;
