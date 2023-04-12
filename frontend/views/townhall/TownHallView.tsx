@@ -11,7 +11,7 @@ export default function HelloReactView() {
 
   useEffect(() => {
     TownHallEndpoint.getQuestions().then(setQuestions);
-  });
+  }, []);
 
   return (
     <>
@@ -29,6 +29,7 @@ export default function HelloReactView() {
           }}
           onSubmit={async (ev) => {
             const question: Question = {text: ev.detail.value, score: 0};
+            console.log(question);
             await TownHallEndpoint.submitQuestion(question);
             setQuestions([...questions, question]);
           }}
