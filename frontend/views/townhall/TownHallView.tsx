@@ -3,7 +3,7 @@ import { Notification } from "@hilla/react-components/Notification.js";
 import { VirtualList } from "@hilla/react-components/VirtualList.js";
 import Question from "Frontend/generated/com/example/application/data/Question.js";
 
-import { HelloReactEndpoint, TownHallEndpoint } from "Frontend/generated/endpoints.js";
+import { TownHallEndpoint } from "Frontend/generated/endpoints.js";
 import { useEffect, useState } from "react";
 
 export default function HelloReactView() {
@@ -29,7 +29,6 @@ export default function HelloReactView() {
           }}
           onSubmit={async (ev) => {
             const question: Question = {text: ev.detail.value, score: 0};
-            console.log(question);
             await TownHallEndpoint.submitQuestion(question);
             setQuestions([...questions, question]);
           }}
