@@ -4,6 +4,7 @@ import Question from "Frontend/generated/com/example/application/data/Question.j
 
 import { TownHallEndpoint } from "Frontend/generated/endpoints.js";
 import { useEffect, useState } from "react";
+import styles from "./TownHallView.module.css";
 
 export default function HelloReactView() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -15,7 +16,7 @@ export default function HelloReactView() {
   return (
     <div className="h-full flex flex-col">
       <section className="flex-grow">
-        <VirtualList items={questions} className="p-m h-full box-border">
+        <VirtualList items={questions} className={"p-m h-full box-border " + styles.questions}>
           {({ item }) => <span>{item.text}</span>}
         </VirtualList>
       </section>
