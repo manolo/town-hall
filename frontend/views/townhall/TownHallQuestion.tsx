@@ -3,10 +3,10 @@ import { Icon } from '@hilla/react-components/Icon.js';
 import '@vaadin/icons';
 import cn from 'classnames';
 import Question from 'Frontend/generated/com/example/application/data/Question.js';
-import { TownHallEndpoint } from 'Frontend/generated/endpoints.js';
 import { dateFormatter } from 'Frontend/utils/lang.js';
 import { useState } from 'react';
 import styles from './TownHallQuestion.module.scss';
+import commonStyles from '../../utils/common.module.scss';
 
 export type TownHallQuestionProps = Readonly<{
   item: Question;
@@ -18,10 +18,12 @@ export default function TownHallQuestion({ item, onPriorityChange, onVote }: Tow
   const [userVoted, setUserVoted] = useState(item.userVoted);
 
   return (
-    <section className={cn(styles.container, 'rounded-l', 'shadow-m', 'p-s', 'm-xs')}>
+    <section
+      className={cn(styles.container, 'rounded-l', 'shadow-m', 'p-s', 'm-xs', item.priority > 0 && styles.emphasized)}
+    >
       <div className={styles.score}>
         <Button
-          className={cn(styles.vote, 'text-l')}
+          className={cn(styles.vote, commonStyles.button, 'text-l')}
           theme="icon"
           aria-label="Vote for question"
           onClick={async () => {
@@ -37,9 +39,23 @@ export default function TownHallQuestion({ item, onPriorityChange, onVote }: Tow
       <div className={styles.date}>{dateFormatter.format(new Date(item.created))}</div>
 
       <div className={styles.priority}>
-        <Icon icon="vaadin:chevron-up-small" onClick={() => onPriorityChange(item.priority + 1)} />
+        <Button
+          className={commonStyles.button}
+          theme="icon"
+          aria-label="Increase priority of the question"
+          onClick={() => onPriorityChange(item.priority + 1)}
+        >
+          <Icon icon="vaadin:chevron-up-small" />
+        </Button>
         <div>{item.priority}</div>
-        <Icon icon="vaadin:chevron-down-small" onClick={() => onPriorityChange(item.priority - 1)} />
+        <Button
+          className={commonStyles.button}
+          theme="icon"
+          aria-label="Decrease priority of the question"
+          onClick={() => onPriorityChange(item.priority - 1)}
+        >
+          <Icon icon="vaadin:chevron-down-small" />
+        </Button>
       </div>
     </section>
   );

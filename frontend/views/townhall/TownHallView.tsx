@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Question from 'Frontend/generated/com/example/application/data/Question.js';
 import { TownHallEndpoint } from 'Frontend/generated/endpoints.js';
 import TownHallQuestion from 'Frontend/views/townhall/TownHallQuestion.js';
-import styles from './TownHallView.module.css';
+import styles from './TownHallView.module.scss';
 
 function sortQuestions(questions: Question[]) {
   // Sort the questions by priority
@@ -20,7 +20,7 @@ export default function HelloReactView() {
   }, []);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className={cn('h-full', 'flex', 'flex-col', styles.container)}>
       <section className="flex-grow">
         <VirtualList items={sortQuestions(questions)} className={cn('p-m', 'h-full', 'box-border', styles.questions)}>
           {({ item: question }) => (

@@ -6,6 +6,10 @@
     'score text priority'
     'score date priority';
   font-size: var(--lumo-font-size-l);
+
+  &:not(.emphasized) {
+    background-color: var(--lumo-contrast-10pct);
+  }
 }
 
 .score {
@@ -20,10 +24,6 @@
 
 .number {
   font-size: 6rem;
-}
-
-.vote {
-  cursor: pointer;
 }
 
 .text {
@@ -45,4 +45,8 @@
   align-items: center;
   justify-content: center;
   color: var(--lumo-primary-color-50pct);
+}
+
+.emphasized {
+  border-inline-start: .5rem var(--lumo-success-color) solid;
 }

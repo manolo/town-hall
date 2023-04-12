@@ -2,11 +2,12 @@ import { AppLayout } from '@hilla/react-components/AppLayout.js';
 import { DrawerToggle } from '@hilla/react-components/DrawerToggle.js';
 import { Item } from '@hilla/react-components/Item.js';
 import { Scroller } from '@hilla/react-components/Scroller.js';
+import cn from 'classnames';
 import Placeholder from 'Frontend/components/placeholder/Placeholder.js';
 import { MenuProps, routes, useViewMatches, ViewRouteObject } from 'Frontend/routes.js';
 import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import css from './MainLayout.module.css';
+import styles from './MainLayout.module.scss';
 
 type MenuRoute = ViewRouteObject &
   Readonly<{
@@ -20,11 +21,11 @@ export default function MenuOnLeftLayout() {
   const currentTitle = matches[matches.length - 1]?.handle?.title ?? 'Unknown';
 
   const menuRoutes = (routes[0]?.children || []).filter(
-    (route) => route.path && route.handle && route.handle.icon && route.handle.title
+    (route) => route.path && route.handle && route.handle.icon && route.handle.title,
   ) as readonly MenuRoute[];
 
   return (
-    <AppLayout className="block h-full" primarySection="drawer">
+    <AppLayout className="h-full block" primarySection="drawer">
       <header slot="drawer">
         <h1 className="text-l m-0">Vaadin Connected</h1>
       </header>
@@ -32,14 +33,14 @@ export default function MenuOnLeftLayout() {
         <nav>
           {menuRoutes.map(({ path, handle: { icon, title } }) => (
             <NavLink
-              className={({ isActive }) => `${css.navlink} ${isActive ? css.navlink_active : ''}`}
+              className={({ isActive }) => `${styles.navlink} ${isActive ? styles.navlink_active : ''}`}
               key={path}
               to={path}
             >
               {({ isActive }) => (
                 <Item key={path} selected={isActive}>
                   <span
-                    className={css.navicon}
+                    className={styles.navicon}
                     style={{ '--mask-image': `url('line-awesome/svg/${icon}.svg')` } as any}
                     aria-hidden="true"
                   ></span>
@@ -57,9 +58,11 @@ export default function MenuOnLeftLayout() {
         {currentTitle}
       </h2>
 
-      <Suspense fallback={<Placeholder />}>
-        <Outlet />
-      </Suspense>
+      <section className={cn('h-full', styles.outlet)}>
+        <Suspense fallback={<Placeholder />}>
+          <Outlet />
+        </Suspense>
+      </section>
     </AppLayout>
   );
 }
