@@ -53,7 +53,10 @@ export default function HelloReactView() {
               priority: 0,
             };
             await TownHallEndpoint.submitQuestion(question);
+            // Render the new question immediately
             setQuestions([...questions, question]);
+            // Fetch the new questions from the server
+            await TownHallEndpoint.getQuestions().then(setQuestions);
           }}
         />
       </section>

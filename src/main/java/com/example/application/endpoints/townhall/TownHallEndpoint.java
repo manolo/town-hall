@@ -1,8 +1,11 @@
 package com.example.application.endpoints.townhall;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Pageable;
 
 import com.example.application.data.Question;
+import com.example.application.data.service.QuestionService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import dev.hilla.Endpoint;
@@ -10,23 +13,37 @@ import dev.hilla.Endpoint;
 @Endpoint
 @AnonymousAllowed
 public class TownHallEndpoint {
+
+    private final QuestionService service;
+
+    public TownHallEndpoint(QuestionService service) {
+        this.service = service;
+    }
+
     public List<Question> getQuestions() {
-        var q1 = new Question("Should we launch the lunch train?");
-        q1.setScore(5);
-        q1.setUserVoted(true);
-        var q2 = new Question("When is the Vaadin 25 released planned?");
-        q2.setScore(2);
-        q2.setPriority(1);
-        return List.of(q1, q2);
+        return service.list(Pageable.unpaged()).map(q -> {
+            var question = new Question(q.getQuestion());
+            question.setScore(q.getRank() != null ? q.getRank() : 0);
+            question.setId(q.getId());
+            return question;
+        }).stream().collect(Collectors.toList());
     }
 
     public void submitQuestion(Question question) {
-        // no-op
+        com.example.application.data.entity.Question newQuestion = new com.example.application.data.entity.Question();
+        newQuestion.setQuestion(question.getText());
+        service.update(newQuestion);
     }
 
     public void vote(Question question, boolean up) {
-        // no-op
-        System.out.println("Voted " + (up ? "up" : "down") + " for " + question.getText() + "");
+        var savedQuestion = service.get(question.getId());
+        if (savedQuestion.isPresent()) {
+            var q = savedQuestion.get();
+            q.setRank(q.getRank() + (up ? 1 : -1));
+            service.update(q);
+        } else {
+            throw new IllegalArgumentException("Question not found");
+        }
     }
 
     public void setPriority(Question question, int priority) {
