@@ -1,7 +1,8 @@
-# Custom project from Hilla
+# Experiment a Town Hall App developed in Hilla + React
 
-This project can be used as a starting point to create your own Hilla application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+This project still a work in progress.
+
+__NOTE__: If you want to experiment with SSO in google, you need to configure `src/main/resources/application.properties`
 
 ## Running the application
 
