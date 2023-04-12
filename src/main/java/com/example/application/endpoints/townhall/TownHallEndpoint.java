@@ -20,4 +20,9 @@ public class TownHallEndpoint {
     public void submitQuestion(Question question) {
         // no-op
     }
+
+    public void vote(Question question, boolean up) {
+        // no-op
+        System.out.println("Voted " + (up ? "up" : "down") + " for " + question.getText() + "");
+    }
 }

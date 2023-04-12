@@ -3,9 +3,11 @@ package com.example.application.data;
 import java.time.LocalDateTime;
 
 public class Question {
+    private long id;
     private int score;
     private String text;
     private LocalDateTime created;
+    private boolean userVoted;
 
     public Question(String text, int score, LocalDateTime created) {
         this.text = text;
@@ -15,6 +17,14 @@ public class Question {
 
     public Question(String text) {
         this(text, 0, LocalDateTime.now());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public LocalDateTime getCreated() {
@@ -39,5 +49,13 @@ public class Question {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isUserVoted() {
+        return userVoted;
+    }
+
+    public void setUserVoted(boolean userVoted) {
+        this.userVoted = userVoted;
     }
 }

@@ -28,7 +28,7 @@ export default function HelloReactView() {
             message: 'Type your question',
           }}
           onSubmit={async (ev) => {
-            const question: Question = { text: ev.detail.value, score: 0, created: new Date().toISOString() };
+            const question: Question = { text: ev.detail.value, score: 0, created: new Date().toISOString(), userVoted: false, id: 0 };
             await TownHallEndpoint.submitQuestion(question);
             setQuestions([...questions, question]);
           }}
