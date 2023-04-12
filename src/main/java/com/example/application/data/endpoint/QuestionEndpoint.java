@@ -1,15 +1,19 @@
 package com.example.application.data.endpoint;
 
-import com.example.application.data.entity.Question;
-import com.example.application.data.service.QuestionService;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
-import dev.hilla.Endpoint;
-import dev.hilla.Nonnull;
-import dev.hilla.exception.EndpointException;
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.example.application.data.entity.Question;
+import com.example.application.data.service.QuestionService;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+
+import dev.hilla.Endpoint;
+import dev.hilla.Nonnull;
+import dev.hilla.exception.EndpointException;
 
 @Endpoint
 @AnonymousAllowed
@@ -19,6 +23,11 @@ public class QuestionEndpoint {
 
     public QuestionEndpoint(QuestionService service) {
         this.service = service;
+    }
+
+    @Nonnull
+    public List<@Nonnull Question> listAll() {
+        return service.listAll();
     }
 
     @Nonnull

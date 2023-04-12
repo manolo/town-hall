@@ -1,5 +1,7 @@
 import TownHallView from 'Frontend/views/townhall/TownHallView.js';
 import SessionsView from 'Frontend/views/sessions/SessionsView.js';
+import QuestionsView from 'Frontend/views/questions/QuestionsView.js';
+import VotesView from 'Frontend/views/votes/VotesView.js';
 
 import MainLayout from 'Frontend/views/MainLayout.js';
 import { createBrowserRouter, IndexRouteObject, NonIndexRouteObject, useMatches } from 'react-router-dom';
@@ -34,7 +36,9 @@ export const routes: readonly ViewRouteObject[] = [
     handle: { icon: 'null', title: 'Main' },
     children: [
       { path: '/', element: <TownHallView />, handle: { icon: 'comments-solid', title: 'Town Hall' } },
-      { path: '/sessions', element: <SessionsView />, handle: { icon: 'calendar-check-solid', title: 'Sessions' } },
+      { path: '/sessions', element: <SessionsView />, handle: { icon: 'calendar-check-solid', title: 'Admin Sessions' } },
+      { path: '/questions', element: <QuestionsView />, handle: { icon: 'question-solid', title: 'Admin Questions' } },
+      { path: '/votes', element: <VotesView />, handle: { icon: 'thumbs-up-solid', title: 'Admin Votes' } },
 
     ],
   },

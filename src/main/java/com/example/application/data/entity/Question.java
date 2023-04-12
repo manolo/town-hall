@@ -1,5 +1,6 @@
 package com.example.application.data.entity;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import dev.hilla.Nonnull;
@@ -28,6 +29,9 @@ public class Question extends AbstractEntity {
     @ManyToOne
     @Nonnull
     private Session session;
+    
+    private LocalDate date;
+
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @OrderColumn
@@ -58,5 +62,10 @@ public class Question extends AbstractEntity {
     public void setSession(Session session) {
         this.session = session;
     }
-
+    public LocalDate getDate() {
+        return date;
+    }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

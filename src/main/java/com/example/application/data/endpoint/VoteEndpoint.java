@@ -6,6 +6,8 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
 import dev.hilla.Nonnull;
 import dev.hilla.exception.EndpointException;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,11 @@ public class VoteEndpoint {
 
     public VoteEndpoint(VoteService service) {
         this.service = service;
+    }
+
+    @Nonnull
+    public List<@Nonnull Vote> listAll() {
+        return service.listAll();
     }
 
     @Nonnull
