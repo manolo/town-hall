@@ -1,20 +1,17 @@
 import { MessageInput } from "@hilla/react-components/MessageInput.js";
 import { Notification } from "@hilla/react-components/Notification.js";
 import { VirtualList } from "@hilla/react-components/VirtualList.js";
+import Question from "Frontend/generated/com/example/application/data/Question.js";
 
-import { HelloReactEndpoint } from "Frontend/generated/endpoints.js";
-import { useState } from "react";
-
-type Question = {
-  text: string;
-  userVoted?: boolean;
-};
+import { HelloReactEndpoint, TownHallEndpoint } from "Frontend/generated/endpoints.js";
+import { useEffect, useState } from "react";
 
 export default function HelloReactView() {
-  const [questions, setQuestions] = useState<Question[]>([
-    { text: "What is your name?" },
-    { text: "How are you?" },
-  ]);
+  const [questions, setQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
+    TownHallEndpoint.getQuestions().then(setQuestions);
+  });
 
   return (
     <>
@@ -31,12 +28,9 @@ export default function HelloReactView() {
             message: "Type your question",
           }}
           onSubmit={async (ev) => {
-            setQuestions([...questions, { text: ev.detail.value }]);
-
-            const serverResponse = await HelloReactEndpoint.sayHello(
-              ev.detail.value
-            );
-            Notification.show(serverResponse);
+            const question: Question = {text: ev.detail.value, score: 0};
+            await TownHallEndpoint.submitQuestion(question);
+            setQuestions([...questions, question]);
           }}
         />
       </section>
