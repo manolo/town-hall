@@ -8,9 +8,10 @@ import { useState } from 'react';
 
 export type TownHallQuestionProps = Readonly<{
   item: Question;
+  onPriorityChange: (priority: number) => void;
 }>;
 
-export default function TownHallQuestion({ item }: TownHallQuestionProps) {
+export default function TownHallQuestion({ item, onPriorityChange }: TownHallQuestionProps) {
   const [userVoted, setUserVoted] = useState(item.userVoted);
 
   return (
@@ -29,9 +30,9 @@ export default function TownHallQuestion({ item }: TownHallQuestionProps) {
       <div className={styles.date}>{dateFormatter.format(new Date(item.created))}</div>
 
       <div className={styles.priority}>
-        <Icon icon="vaadin:chevron-up-small" />
+        <Icon icon="vaadin:chevron-up-small" onClick={e => onPriorityChange(item.priority + 1)}/>
         <div>{item.priority}</div>
-        <Icon icon="vaadin:chevron-down-small" />
+        <Icon icon="vaadin:chevron-down-small" onClick={e => onPriorityChange(item.priority - 1)}/>
       </div>
     </section>
   );

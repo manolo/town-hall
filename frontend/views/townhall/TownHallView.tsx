@@ -6,22 +6,31 @@ import { TownHallEndpoint } from 'Frontend/generated/endpoints.js';
 import TownHallQuestion from 'Frontend/views/townhall/TownHallQuestion.js';
 import styles from './TownHallView.module.css';
 
+function sortQuestions(questions: Question[]) {
+  // Sort the questions by priority
+  return questions.sort((a, b) => b.priority - a.priority);
+}
+
 export default function HelloReactView() {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    TownHallEndpoint.getQuestions().then(questions => {
-      // Sort the questions by priority
-      const sortedQuestions = questions.sort((a, b) => b.priority - a.priority);
-      setQuestions(sortedQuestions);
-    });
+    TownHallEndpoint.getQuestions().then(setQuestions);
   }, []);
 
   return (
     <div className="h-full flex flex-col">
       <section className="flex-grow">
-        <VirtualList items={questions} className={'p-m h-full box-border ' + styles.questions}>
-          {TownHallQuestion}
+        <VirtualList items={sortQuestions(questions)} className={'p-m h-full box-border ' + styles.questions}>
+          {({ item: question }) => (
+            <TownHallQuestion
+              item={question}
+              onPriorityChange={(priority) => {
+                question.priority = priority;
+                setQuestions([...questions]);
+              }}
+            />
+          )}
         </VirtualList>
       </section>
 
