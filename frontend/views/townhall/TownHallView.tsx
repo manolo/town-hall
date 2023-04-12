@@ -30,8 +30,17 @@ export default function HelloReactView() {
                 question.priority = priority;
                 setQuestions([...questions]);
                 await TownHallEndpoint.setPriority(question, priority);
+                // Fetch the new questions from the server
+                await TownHallEndpoint.getQuestions().then(setQuestions);
               }}
-              onVote={async (state) => TownHallEndpoint.vote(question, state)}
+              onVoteChange={async (state) => {
+                question.userVoted = state;
+                question.score += state ? 1 : -1;
+                setQuestions([...questions]);
+                await TownHallEndpoint.vote(question, state);
+                // Fetch the new questions from the server
+                await TownHallEndpoint.getQuestions().then(setQuestions);
+              }}
             />
           )}
         </VirtualList>

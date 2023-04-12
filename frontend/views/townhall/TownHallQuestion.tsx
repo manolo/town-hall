@@ -11,10 +11,10 @@ import commonStyles from '../../utils/common.module.scss';
 export type TownHallQuestionProps = Readonly<{
   item: Question;
   onPriorityChange: (priority: number) => void;
-  onVote: (state: boolean) => Promise<void>;
+  onVoteChange: (state: boolean) => void;
 }>;
 
-export default function TownHallQuestion({ item, onPriorityChange, onVote }: TownHallQuestionProps) {
+export default function TownHallQuestion({ item, onPriorityChange, onVoteChange }: TownHallQuestionProps) {
   const [userVoted, setUserVoted] = useState(item.userVoted);
 
   return (
@@ -27,7 +27,7 @@ export default function TownHallQuestion({ item, onPriorityChange, onVote }: Tow
           theme="icon"
           aria-label="Vote for question"
           onClick={async () => {
-            await onVote(!userVoted);
+            await onVoteChange(!userVoted);
             setUserVoted(!userVoted);
           }}
         >
