@@ -1,10 +1,10 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 7fr;
+  grid-template-columns: 1fr 7fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "score text"
-    "score date";
+    "score text priority"
+    "score date priority";
   background: var(--lumo-primary-color);
   color: var(--lumo-primary-contrast-color);
   padding: var(--lumo-space-m);
@@ -22,4 +22,11 @@
 
 .date {
   grid-area: date;
+}
+
+.priority {
+  grid-area: priority;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

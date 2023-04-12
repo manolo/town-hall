@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Question {
     private long id;
     private int score;
+    private int priority;
     private String text;
     private LocalDateTime created;
     private boolean userVoted;
@@ -57,5 +58,13 @@ public class Question {
 
     public void setUserVoted(boolean userVoted) {
         this.userVoted = userVoted;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

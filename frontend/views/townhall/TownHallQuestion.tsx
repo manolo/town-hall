@@ -27,6 +27,12 @@ export default function TownHallQuestion({ item }: TownHallQuestionProps) {
       </div>
       <div className={styles.text}>{item.text}</div>
       <div className={styles.date}>{dateFormatter.format(new Date(item.created))}</div>
+
+      <div className={styles.priority}>
+        <Icon icon="vaadin:chevron-up-small" />
+        <div>{item.priority}</div>
+        <Icon icon="vaadin:chevron-down-small" />
+      </div>
     </section>
   );
 }
