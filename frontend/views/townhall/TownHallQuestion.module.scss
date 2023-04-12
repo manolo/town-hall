@@ -25,6 +25,7 @@
 }
 
 .priority {
+  user-select: none;
   grid-area: priority;
   display: flex;
   flex-direction: column;

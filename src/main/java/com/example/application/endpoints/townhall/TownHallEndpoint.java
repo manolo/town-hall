@@ -28,4 +28,9 @@ public class TownHallEndpoint {
         // no-op
         System.out.println("Voted " + (up ? "up" : "down") + " for " + question.getText() + "");
     }
+
+    public void setPriority(Question question, int priority) {
+        // no-op
+        System.out.println("Set priority " + priority + " for " + question.getText() + "");
+    }
 }

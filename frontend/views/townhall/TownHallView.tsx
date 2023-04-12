@@ -25,9 +25,10 @@ export default function HelloReactView() {
           {({ item: question }) => (
             <TownHallQuestion
               item={question}
-              onPriorityChange={(priority) => {
+              onPriorityChange={async (priority) => {
                 question.priority = priority;
                 setQuestions([...questions]);
+                await TownHallEndpoint.setPriority(question, priority);
               }}
             />
           )}
