@@ -1,5 +1,6 @@
 import { MessageInput } from '@hilla/react-components/MessageInput.js';
 import { VirtualList } from '@hilla/react-components/VirtualList.js';
+import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import Question from 'Frontend/generated/com/example/application/data/Question.js';
 import { TownHallEndpoint } from 'Frontend/generated/endpoints.js';
@@ -21,7 +22,7 @@ export default function HelloReactView() {
   return (
     <div className="h-full flex flex-col">
       <section className="flex-grow">
-        <VirtualList items={sortQuestions(questions)} className={'p-m h-full box-border ' + styles.questions}>
+        <VirtualList items={sortQuestions(questions)} className={cn('p-m', 'h-full', 'box-border', styles.questions)}>
           {({ item: question }) => (
             <TownHallQuestion
               item={question}
