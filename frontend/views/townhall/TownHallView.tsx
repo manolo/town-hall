@@ -1,5 +1,4 @@
 import { MessageInput } from "@hilla/react-components/MessageInput.js";
-import { Notification } from "@hilla/react-components/Notification.js";
 import { VirtualList } from "@hilla/react-components/VirtualList.js";
 import Question from "Frontend/generated/com/example/application/data/Question.js";
 
@@ -14,9 +13,9 @@ export default function HelloReactView() {
   }, []);
 
   return (
-    <>
-      <section>
-        <VirtualList items={questions} className="p-m">
+    <div className="h-full flex flex-col">
+      <section className="flex-grow">
+        <VirtualList items={questions} className="p-m h-full box-border">
           {({ item }) => <span>{item.text}</span>}
         </VirtualList>
       </section>
@@ -28,12 +27,12 @@ export default function HelloReactView() {
             message: "Type your question",
           }}
           onSubmit={async (ev) => {
-            const question: Question = {text: ev.detail.value, score: 0};
+            const question: Question = { text: ev.detail.value, score: 0 };
             await TownHallEndpoint.submitQuestion(question);
             setQuestions([...questions, question]);
           }}
         />
       </section>
-    </>
+    </div>
   );
 }
