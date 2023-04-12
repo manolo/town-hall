@@ -10,7 +10,11 @@ export default function HelloReactView() {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    TownHallEndpoint.getQuestions().then(setQuestions);
+    TownHallEndpoint.getQuestions().then(questions => {
+      // Sort the questions by priority
+      const sortedQuestions = questions.sort((a, b) => b.priority - a.priority);
+      setQuestions(sortedQuestions);
+    });
   }, []);
 
   return (
